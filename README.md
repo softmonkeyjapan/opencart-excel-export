@@ -1,5 +1,5 @@
-opencart-excel-export
-=====================
+Excel Export
+============
 
 Documentation
 -------------
