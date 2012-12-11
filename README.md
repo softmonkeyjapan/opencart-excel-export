@@ -1,4 +1,7 @@
 opencart-excel-export
 =====================
 
-Opencart component to export into Excel file
+Documentation
+-------------
+
+See : http://soft-monkey.com/opencart/excel-export/documentation/
