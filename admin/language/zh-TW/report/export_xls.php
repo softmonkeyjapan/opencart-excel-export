@@ -1,4 +1,15 @@
 <?php
+/**
+*
+* help_faq [正體中文]
+*
+* @package language
+* @version $Id$
+* @copyright (c) 2013 OpenCart Taiwan Group (阿維)
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+
 $_['heading_title'] 				= '匯出';
 
 // Module text
