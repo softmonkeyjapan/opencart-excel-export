@@ -16,19 +16,11 @@
 				$this->data['report_export_xls'] = $this->url->link('report/export_xls', 'token=' . $this->session->data['token'], 'SSL');]]></add>
 		</operation>
 	</file>
-	<file name="adminBHMwilly/language/english/common/header.php">
+	<file name="adminBHMwilly/language/*/common/header.php">
 		<operation error="abort">
 			<search position="before"><![CDATA[?>]]></search>
 			<add><![CDATA[
 				$_['text_report_export_xls']		   = 'Export to Excel';
-			]]></add>
-		</operation>
-	</file>
-	<file name="adminBHMwilly/language/french/common/header.php">
-		<operation error="abort">
-			<search position="before"><![CDATA[?>]]></search>
-			<add><![CDATA[
-				$_['text_report_export_xls']		   = 'Export vers Excel';
 			]]></add>
 		</operation>
 	</file>
