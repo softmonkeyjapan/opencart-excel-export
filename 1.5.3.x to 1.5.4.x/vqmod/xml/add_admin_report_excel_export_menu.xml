@@ -1,0 +1,36 @@
+<modification>
+	<id>Add Admin Excel Export Report Menu</id>
+	<version>1.0.0</version>
+	<vqmver>2.3.0</vqmver>
+	<author>Laurent Chapin - opencart.midicloud.eu</author>
+
+	<file name="adminBHMwilly/controller/common/header.php">
+		<operation error="abort">
+			<search position="after"><![CDATA[$this->data['text_reports'] = $this->language->get('text_reports');]]></search>
+			<add><![CDATA[
+				$this->data['text_report_export_xls'] = $this->language->get('text_report_export_xls');]]></add>
+		</operation>
+		<operation error="abort">
+			<search position="after"><![CDATA[$this->data['product'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'], 'SSL');]]></search>
+			<add><![CDATA[
+				$this->data['report_export_xls'] = $this->url->link('report/export_xls', 'token=' . $this->session->data['token'], 'SSL');]]></add>
+		</operation>
+	</file>
+	<file name="adminBHMwilly/language/*/common/header.php">
+		<operation error="abort">
+			<search position="before"><![CDATA[?>]]></search>
+			<add><![CDATA[
+				$_['text_report_export_xls']		   = 'Export to Excel';
+			]]></add>
+		</operation>
+	</file>
+	<file name="adminBHMwilly/view/template/common/header.tpl">
+		<operation error="abort">
+			<search position="after" offset="1"><![CDATA[<li id="reports"><a class="top"><?php echo $text_reports; ?></a>]]></search>
+			<add><![CDATA[
+				<li><a href="<?php echo $report_export_xls; ?>"><?php echo $text_report_export_xls; ?></a></li>
+				]]></add>
+		</operation>
+	</file>
+
+</modification>
