@@ -3,7 +3,7 @@ class ModelReportExportXLS extends Model{
 
 	public function getOrders($data = array()){
 		$sql = "SELECT * FROM `" . DB_PREFIX . "order` AS o ";
-		$sql.= "LEFT JOIN `" . DB_PREFIX . "order_status` AS os ON os.order_status_id = o.order_status_id";
+		$sql.= "LEFT JOIN `" . DB_PREFIX . "order_status` AS os ON (os.order_status_id = o.order_status_id AND os.language_id = '" . (int)$this->config->get('config_language_id') . "') ";
 
 		if (!empty($data['filter_order_status_id'])) {
 			$sql .= " WHERE o.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";

@@ -6,6 +6,7 @@ Excel Export allow you to easily export all your orders into an Excel files. You
 ## Requirements
 
 * Opencart 1.5.3.x to 1.5.5.x
+* vqmod opencart module
 * PHP5
 
 ## Installation
