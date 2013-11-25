@@ -4,7 +4,7 @@
 	<vqmver>2.3.0</vqmver>
 	<author>Laurent Chapin - opencart.midicloud.eu</author>
 
-	<file name="adminBHMwilly/controller/common/header.php">
+	<file name="admin/controller/common/header.php">
 		<operation error="abort">
 			<search position="after"><![CDATA[$this->data['text_reports'] = $this->language->get('text_reports');]]></search>
 			<add><![CDATA[
@@ -16,7 +16,7 @@
 				$this->data['report_export_xls'] = $this->url->link('report/export_xls', 'token=' . $this->session->data['token'], 'SSL');]]></add>
 		</operation>
 	</file>
-	<file name="adminBHMwilly/language/*/common/header.php">
+	<file name="admin/language/*/common/header.php">
 		<operation error="abort">
 			<search position="before"><![CDATA[?>]]></search>
 			<add><![CDATA[
@@ -24,7 +24,7 @@
 			]]></add>
 		</operation>
 	</file>
-	<file name="adminBHMwilly/view/template/common/header.tpl">
+	<file name="admin/view/template/common/header.tpl">
 		<operation error="abort">
 			<search position="after" offset="1"><![CDATA[<li id="reports"><a class="top"><?php echo $text_reports; ?></a>]]></search>
 			<add><![CDATA[
