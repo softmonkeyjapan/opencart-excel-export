@@ -34,6 +34,13 @@ In `Access Permission` and `Modify Permission`, check the item `report/export_xl
 For more details on how to use it, go to http://soft-monkey.com/opencart/excel-export/documentation/
 
 
+### Thanks
+
+It's important to thanks poeple that helped me improve this extension : 
+- Laurent Chapin
+- 阿維
+- Ilsur Bilalov
+
 ## License
 
 You are allowed to use it for whatever you want and whenever you want.
