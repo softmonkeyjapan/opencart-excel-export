@@ -41,18 +41,7 @@ class ControllerReportExportXLS extends Controller{
 
 
 		// Check if date start, date end and status were set as filter
-		if (isset($this->request->get['filter_date_start'])) {
-			$this->filter_date_start = $this->request->get['filter_date_start'];
-		} else 
-			$this->filter_date_start = date('Y-m-d', strtotime(date('Y') . '-' . date('m') . '-01'));
-		if (isset($this->request->get['filter_date_end'])) {
-			$this->filter_date_end = $this->request->get['filter_date_end'];
-		} else 
-			$this->filter_date_end = date('Y-m-d');
-		if (isset($this->request->get['filter_order_status_id'])) {
-			$this->filter_order_status_id = $this->request->get['filter_order_status_id'];
-		} else
-			$this->filter_order_status_id = 0;
+		$this->setFilters();
 
 
 		// Add filter dates to the url (GET)
@@ -171,7 +160,39 @@ class ControllerReportExportXLS extends Controller{
 
 
 
+	/**
+	 * Set filter passed through URL
+	 * Use default values if filters not defined yet
+	 */
+	private function setFilters()
+	{
+		if (isset($this->request->get['filter_date_start']))
+		{
+			$this->filter_date_start = $this->request->get['filter_date_start'];
+		}
+		else
+		{
+			$this->filter_date_start = date('Y-m-d', strtotime(date('Y') . '-' . date('m') . '-01'));
+		}
 
+		if (isset($this->request->get['filter_date_end']))
+		{
+			$this->filter_date_end = $this->request->get['filter_date_end'];
+		}
+		else
+		{
+			$this->filter_date_end = date('Y-m-d');
+		}
+		
+		if (isset($this->request->get['filter_order_status_id']))
+		{
+			$this->filter_order_status_id = $this->request->get['filter_order_status_id'];
+		}
+		else
+		{
+			$this->filter_order_status_id = 0;
+		}
+	}
 
 
 
@@ -224,7 +245,8 @@ class ControllerReportExportXLS extends Controller{
 
 		// If user click on "Export all"
 		if(isset($this->request->get['order'])) {
-			$this->load->model('report/export_xls');	
+			$this->load->model('report/export_xls');
+			$this->setFilters();
 			$data = array(
 				'filter_date_start'	     => $this->filter_date_start, 
 				'filter_date_end'	     => $this->filter_date_end,
