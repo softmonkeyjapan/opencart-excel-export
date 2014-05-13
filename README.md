@@ -31,7 +31,7 @@ In `Access Permission` and `Modify Permission`, check the item `report/export_xl
 
 ### How to use
 
-For more details on how to use it, go to http://soft-monkey.com/opencart/excel-export/documentation/
+For more details on how to use it, go to http://kartono-loic.com/app/webroot/excel-export/documentation/
 
 
 ## Thanks
