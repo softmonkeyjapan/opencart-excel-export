@@ -427,7 +427,6 @@ class ControllerReportExportXLS extends Controller{
 		$this->objPHPExcel->getActiveSheet()->getStyle('A21:C21')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
 		$this->objPHPExcel->getActiveSheet()->getStyle('A21:C21')->getFill()->getStartColor()->setARGB('E7EFEF');
 		$this->objPHPExcel->getActiveSheet()->setCellValue('A21', $this->language->get('header_product_name'));
-		$this->objPHPExcel->getActiveSheet()->mergeCells('A21:C21');
 		$this->objPHPExcel->getActiveSheet()->getStyle('D21:E21')->applyFromArray($styleThinBlackBorderOutline);
 		$this->objPHPExcel->getActiveSheet()->getStyle('D21:E21')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
 		$this->objPHPExcel->getActiveSheet()->getStyle('D21:E21')->getFill()->getStartColor()->setARGB('E7EFEF');
@@ -490,6 +489,7 @@ class ControllerReportExportXLS extends Controller{
 			$this->objPHPExcel->getActiveSheet()->setCellValue('F' . $counter, $prod['quantity']);
 			$this->objPHPExcel->getActiveSheet()->setCellValue('G' . $counter, $this->currency->format($prod['price'], $invoice['currency_code'], $invoice['currency_value']));
 			$this->objPHPExcel->getActiveSheet()->setCellValue('H' . $counter, $this->currency->format($prod['total'], $invoice['currency_code'], $invoice['currency_value']));
+			$this->objPHPExcel->getActiveSheet()->mergeCells('D'.$counter.':E'.$counter); // merge product model cells
 
 			$counter++;
 		}
