@@ -18,11 +18,11 @@ This repo is now separate by branch. The current branch is the latest supported 
 
 _[Manual]_
 
-* Download this: [https://github.com/SoftMonkeyJapan/opencart-excel-export/archive/master.zip](https://github.com/SoftMonkeyJapan/opencart-excel-export/archive/master.zip)
+* Download this: [https://github.com/SoftMonkeyJapan/opencart-excel-export/archive/1.5.5.x.zip](https://github.com/SoftMonkeyJapan/opencart-excel-export/archive/1.5.5.x.zip)
 * Unzip that download.
 * Go into the unzip folder
 * Copy the folder `system` into your opencart directory
-* Next, select the folder matching your opencart version (1.5.x.x) and copy the admin folder into your opencart directory (This will overwrite some files)
+* Copy the admin folder (localted into the 1.5.5.x folder) into your opencart directory (This will overwrite some files)
 
 
 ## Usage
