@@ -21,8 +21,9 @@ _[Manual]_
 * Download this: [https://github.com/SoftMonkeyJapan/opencart-excel-export/archive/1.5.5.x.zip](https://github.com/SoftMonkeyJapan/opencart-excel-export/archive/1.5.5.x.zip)
 * Unzip that download.
 * Go into the unzip folder
-* Copy the folder `system` into your opencart directory
-* Copy the admin folder (localted into the 1.5.5.x folder) into your opencart directory (This will overwrite some files)
+* Merge the `system` folder into your `system` opencart directory
+* Merge the `admin` folder with your `admin` opencart directory
+* Merge the `vqmod` folder with your `vqmod` opencart directory
 
 
 ## Usage
