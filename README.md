@@ -9,6 +9,11 @@ Excel Export allow you to easily export all your orders into an Excel files. You
 * vqmod opencart module
 * PHP5
 
+## Old version
+
+This repo is now separate by branch. The current branch is the latest supported version of Opencart : 1.5.5.x. However, if you want to use this extension for 1.5.3.x to 1.5.4.x version of Opencart, please use the following link : [https://github.com/SoftMonkeyJapan/opencart-excel-export/archive/1.5.3.x-to-1.5.4.x.zip](https://github.com/SoftMonkeyJapan/opencart-excel-export/archive/1.5.3.x-to-1.5.4.x.zip)
+
+
 ## Installation
 
 _[Manual]_
