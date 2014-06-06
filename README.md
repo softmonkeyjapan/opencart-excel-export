@@ -13,11 +13,11 @@ Excel Export allow you to easily export all your orders into an Excel files. You
 
 _[Manual]_
 
-* Download this: [https://github.com/SoftMonkeyJapan/opencart-excel-export/archive/master.zip](https://github.com/SoftMonkeyJapan/opencart-excel-export/archive/master.zip)
+* Download this: [https://github.com/SoftMonkeyJapan/opencart-excel-export/archive/1.5.3.x-to-1.5.4.x.zip](https://github.com/SoftMonkeyJapan/opencart-excel-export/archive/1.5.3.x-to-1.5.4.x.zip)
 * Unzip that download.
 * Go into the unzip folder
 * Copy the folder `system` into your opencart directory
-* Next, select the folder matching your opencart version (1.5.x.x) and copy the admin folder into your opencart directory (This will overwrite some files)
+* Copy the admin folder (localted into the `1.5.3.x to 1.5.4.x` folder)  into your opencart directory (This will overwrite some files)
 
 
 ## Usage
