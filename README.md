@@ -5,7 +5,7 @@ Excel Export allow you to easily export all your orders into an Excel files. You
 
 ## Requirements
 
-* Opencart 1.5.3.x to 1.5.5.x
+* Opencart 1.5.3.x to 1.5.6.4
 * vqmod opencart module
 * PHP5
 
@@ -18,7 +18,7 @@ This repo is now separate by branch. The current branch is the latest supported 
 
 _[Manual]_
 
-* Download this: [https://github.com/SoftMonkeyJapan/opencart-excel-export/archive/1.5.5.x.zip](https://github.com/SoftMonkeyJapan/opencart-excel-export/archive/1.5.5.x.zip)
+* Download this: [https://github.com/SoftMonkeyJapan/opencart-excel-export/archive/1.5.5.x-to-1.5.6.4.zip](https://github.com/SoftMonkeyJapan/opencart-excel-export/archive/1.5.5.x-to-1.5.6.4.zip)
 * Unzip that download.
 * Go into the unzip folder
 * Merge the `system` folder into your `system` opencart directory
