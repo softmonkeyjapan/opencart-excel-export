@@ -15,6 +15,8 @@ $_['heading_title'] 				= '匯出';
 // Module text
 $_['text_home'] 					= '首頁';
 $_['text_customer'] 				= '客戶';
+$_['text_invoice_no']               = '發票號';
+$_['text_generate']                 = '生成';
 $_['text_date']						= '購買日期';
 $_['text_order']					= '訂單編號';
 $_['text_amount']					= '總計金額';
@@ -37,6 +39,7 @@ $_['button_filter']					= '篩選';
 $_['header_tracking'] 				= '追蹤單號';
 $_['header_order_id'] 				= '訂單編號';
 $_['header_store_name'] 			= '商店名稱';
+$_['header_invoice_no']             = '發票號';
 $_['header_customer'] 				= '客戶';
 $_['header_email']					= '電子郵件';
 $_['header_telephone'] 				= '電話';

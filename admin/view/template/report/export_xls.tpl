@@ -65,7 +65,8 @@
                 <thead>
                     <tr>
                         <td class="left"><?php echo $text_customer; ?></td>
-                        <td class="left"><?php echo $text_product; ?></td>
+                        <td class="left"><?php echo $text_invoice_no; ?></td>
+                        <td class="right"><?php echo $text_product; ?></td>
                         <td class="right"><?php echo $text_order; ?></td>
                         <td class="right"><?php echo $text_date; ?></td>
                         <td class="right"><?php echo $text_amount; ?></td>
@@ -78,6 +79,17 @@
                         <?php foreach ($orders as $order) : ?>
                             <tr>
                                 <td class="left"><?php echo $order['firstname'] . ' ' . $order['lastname']; ?></td>
+                                <td>
+                                    <?php if ($order['invoice_no']) { ?>
+                                        <?php echo $order['invoice_no']; ?>
+                                    <?php } else { ?>
+                                        <span class="invoice<?php echo $order['order_id']; ?>">
+                                            <b>[</b>
+                                            <a class="js-invoice-generate" data-orderid="<?php echo $order['order_id']; ?>"><?php echo $text_generate; ?></a>
+                                            <b>]</b>
+                                        </span>
+                                    <?php } ?>
+                                </td>
                                 <td class="left"><?php echo $order['nb_product']; ?></td>
                                 <td class="right"><?php echo $order['order_id']; ?></td>
                                 <td class="right"><?php echo $order['date_added']; ?></td>
@@ -115,7 +127,31 @@
     <!-- End Box Table -->
 </div>
 
+<script type="text/javascript"><!--
+    $('.js-invoice-generate').on('click', function() {
+        var orderId = $(this).data('orderid');
+        $.ajax({
+            url: 'index.php?route=sale/order/createinvoiceno&token=<?php echo $token; ?>&order_id=' + orderId,
+            dataType: 'json',
+            beforeSend: function() {
+                $('.invoice' + orderId).after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />'); 
+            },
+            complete: function() {
+                $('.loading').remove();
+            },
+            success: function(json) {
+                $('.success, .warning').remove();
 
+                if (json.invoice_no) {
+                    $('.invoice' + orderId).fadeOut('slow', function() {
+                        $('.invoice' + orderId).html(json['invoice_no']);
+                        $('.invoice' + orderId).fadeIn('slow');
+                    });
+                }
+            }
+        });
+    });
+//--></script>
 
 <script type="text/javascript"><!--
     function filter() {

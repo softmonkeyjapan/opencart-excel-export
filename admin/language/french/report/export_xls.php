@@ -4,6 +4,8 @@
 	// Module text
 	$_['text_home'] 					= 'Accueil';
 	$_['text_customer'] 				= 'Client';
+	$_['text_invoice_no']               = 'Facture n°';
+	$_['text_generate']                 = 'Générer';
 	$_['text_date']						= "Date d'achat";
 	$_['text_order']					= 'Commande';
 	$_['text_amount']					= 'Montant total';
@@ -26,6 +28,7 @@
 	$_['header_tracking'] 				= 'Numéro de suivi';
 	$_['header_order_id'] 				= 'Commande n°';
 	$_['header_store_name'] 			= 'Nom de la boutique';
+	$_['header_invoice_no']             = 'Facture n°';
 	$_['header_customer'] 				= 'Client';
 	$_['header_email'] 					= 'E-mail';
 	$_['header_telephone'] 				= 'Téléphone';

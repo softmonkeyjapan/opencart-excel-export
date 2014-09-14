@@ -95,6 +95,8 @@ class ControllerReportExportXLS extends Controller
 		// Text
 		$this->data['heading_title']    = $this->language->get('heading_title');
 		$this->data['text_customer']    = $this->language->get('text_customer');
+		$this->data['text_invoice_no']  = $this->language->get('text_invoice_no');
+		$this->data['text_generate']    = $this->language->get('text_generate');
 		$this->data['text_date']        = $this->language->get('text_date');
 		$this->data['text_order']       = $this->language->get('text_order');
 		$this->data['text_amount']      = $this->language->get('text_amount');
@@ -116,6 +118,7 @@ class ControllerReportExportXLS extends Controller
 
 
 		// Model export
+		$this->load->model('sale/order');
 		$this->load->model('report/export_xls');
 		$data = array(
 			'filter_date_start'      => $this->filter_date_start,
@@ -143,10 +146,19 @@ class ControllerReportExportXLS extends Controller
 				'href' => $this->url->link('report/export_xls/createInvoice', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'], 'SSL')
 			);
 
+			// Invoice related informations
+			$invoice = '';
+
+			if ($result['invoice_no'])
+			{
+				$invoice = $result['invoice_prefix'] . $result['invoice_no'];
+			}
+
 			// New line
 			$this->data['orders'][] = array(
 				'firstname'  => $result['firstname'],
 				'lastname'   => $result['lastname'],
+				'invoice_no' => $invoice,
 				'nb_product' => $this->model_report_export_xls->getTotalProductFromOrder($result['order_id']),
 				'order_id'   => $result['order_id'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
@@ -556,16 +568,35 @@ class ControllerReportExportXLS extends Controller
 		$this->load->model('sale/order');
 
 		$result = $this->model_report_export_xls->getOrder($order_id);
+		$totals = $this->model_sale_order->getOrderTotals($order_id);
+		$vat = '';
 
 		// Build array
 		foreach ($result as $res)
 		{
+			// Invoice related informations
+			$invoice = '';
+
+			if ($res['invoice_no'])
+			{
+				$invoice = $res['invoice_prefix'] . $res['invoice_no'];
+			}
+
+			// VAT information
+			foreach ($totals as $total) {
+				if (strpos($total['title'], 'VAT') === 0) {
+					$vat = $total;
+				}
+			}
+
 			$this->data['orders'][] = array(
 				'order_id'           => $res['order_id'],
 				'store_name'         => $res['store_name'],
+				'invoice_no'         => $invoice,
 				'customer'           => $res['firstname'] . ' ' . $res['lastname'],
 				'email'              => $res['email'],
 				'telephone'          => $res['telephone'],
+				'vat'                => $vat,
 				'total'              => $this->currency->format($res['total'], $res['currency_code'], $res['currency_value']),
 				'date_added'         => date($this->language->get('date_format_short'), strtotime($res['date_added'])),
 
@@ -598,24 +629,26 @@ class ControllerReportExportXLS extends Controller
 
 			$this->objPHPExcel->getActiveSheet()->setCellValue('A' . $this->mainCounter, $this->language->get('header_order_id'));
 			$this->objPHPExcel->getActiveSheet()->setCellValue('B' . $this->mainCounter, $this->language->get('header_store_name'));
-			$this->objPHPExcel->getActiveSheet()->setCellValue('C' . $this->mainCounter, $this->language->get('header_customer'));
-			$this->objPHPExcel->getActiveSheet()->setCellValue('D' . $this->mainCounter, $this->language->get('header_email'));
-			$this->objPHPExcel->getActiveSheet()->setCellValue('E' . $this->mainCounter, $this->language->get('header_telephone'));
-			$this->objPHPExcel->getActiveSheet()->setCellValue('F' . $this->mainCounter, $this->language->get('header_total'));
-			$this->objPHPExcel->getActiveSheet()->setCellValue('G' . $this->mainCounter, $this->language->get('header_date'));
-			$this->objPHPExcel->getActiveSheet()->setCellValue('H' . $this->mainCounter, $this->language->get('header_product_quantity'));
-			$this->objPHPExcel->getActiveSheet()->setCellValue('I' . $this->mainCounter, $this->language->get('header_product_name'));
-			$this->objPHPExcel->getActiveSheet()->setCellValue('J' . $this->mainCounter, $this->language->get('header_product_model'));
-			$this->objPHPExcel->getActiveSheet()->setCellValue('K' . $this->mainCounter, $this->language->get('header_product_color'));
-			$this->objPHPExcel->getActiveSheet()->setCellValue('L' . $this->mainCounter, $this->language->get('header_product_size'));
-			$this->objPHPExcel->getActiveSheet()->setCellValue('M' . $this->mainCounter, $this->language->get('header_shipping_firstname'));
-			$this->objPHPExcel->getActiveSheet()->setCellValue('N' . $this->mainCounter, $this->language->get('header_shipping_lastname'));
-			$this->objPHPExcel->getActiveSheet()->setCellValue('O' . $this->mainCounter, $this->language->get('header_shipping_address'));
-			$this->objPHPExcel->getActiveSheet()->setCellValue('P' . $this->mainCounter, $this->language->get('header_shipping_city'));
-			$this->objPHPExcel->getActiveSheet()->setCellValue('Q' . $this->mainCounter, $this->language->get('header_shipping_postcode'));
-			$this->objPHPExcel->getActiveSheet()->setCellValue('R' . $this->mainCounter, $this->language->get('header_shipping_zone'));
-			$this->objPHPExcel->getActiveSheet()->setCellValue('S' . $this->mainCounter, $this->language->get('header_shipping_country'));
-			$this->objPHPExcel->getActiveSheet()->setCellValue('T' . $this->mainCounter, $this->language->get('header_shipping_method'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('C' . $this->mainCounter, $this->language->get('header_invoice_no'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('D' . $this->mainCounter, $this->language->get('header_customer'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('E' . $this->mainCounter, $this->language->get('header_email'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('F' . $this->mainCounter, $this->language->get('header_telephone'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('G' . $this->mainCounter, $vat['title']);
+			$this->objPHPExcel->getActiveSheet()->setCellValue('H' . $this->mainCounter, $this->language->get('header_total'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('I' . $this->mainCounter, $this->language->get('header_date'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('J' . $this->mainCounter, $this->language->get('header_product_quantity'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('K' . $this->mainCounter, $this->language->get('header_product_name'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('L' . $this->mainCounter, $this->language->get('header_product_model'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('M' . $this->mainCounter, $this->language->get('header_product_color'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('N' . $this->mainCounter, $this->language->get('header_product_size'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('O' . $this->mainCounter, $this->language->get('header_shipping_firstname'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('P' . $this->mainCounter, $this->language->get('header_shipping_lastname'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('Q' . $this->mainCounter, $this->language->get('header_shipping_address'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('R' . $this->mainCounter, $this->language->get('header_shipping_city'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('S' . $this->mainCounter, $this->language->get('header_shipping_postcode'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('T' . $this->mainCounter, $this->language->get('header_shipping_zone'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('U' . $this->mainCounter, $this->language->get('header_shipping_country'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('V' . $this->mainCounter, $this->language->get('header_shipping_method'));
 		}
 
 		$products = $this->model_report_export_xls->getProductListFromOrder($order_id);
@@ -664,24 +697,26 @@ class ControllerReportExportXLS extends Controller
 
 			$this->objPHPExcel->getActiveSheet()->setCellValue('A' . $counter, $this->data['orders'][0]['order_id']);
 			$this->objPHPExcel->getActiveSheet()->setCellValue('B' . $counter, $this->data['orders'][0]['store_name']);
-			$this->objPHPExcel->getActiveSheet()->setCellValue('C' . $counter, $this->data['orders'][0]['customer']);
-			$this->objPHPExcel->getActiveSheet()->setCellValue('D' . $counter, $this->data['orders'][0]['email']);
-			$this->objPHPExcel->getActiveSheet()->setCellValue('E' . $counter, $this->data['orders'][0]['telephone']);
-			$this->objPHPExcel->getActiveSheet()->setCellValue('F' . $counter, $this->data['orders'][0]['total']);
-			$this->objPHPExcel->getActiveSheet()->setCellValue('G' . $counter, $this->data['orders'][0]['date_added']);
-			$this->objPHPExcel->getActiveSheet()->setCellValue('H' . $counter, $prod['quantity']);
-			$this->objPHPExcel->getActiveSheet()->setCellValue('I' . $counter, html_entity_decode($prod['name'], ENT_QUOTES, 'UTF-8'));
-			$this->objPHPExcel->getActiveSheet()->setCellValue('J' . $counter, html_entity_decode($prod['model'], ENT_QUOTES, 'UTF-8'));
-			$this->objPHPExcel->getActiveSheet()->setCellValue('K' . $counter, $color);
-			$this->objPHPExcel->getActiveSheet()->setCellValue('L' . $counter, $size);
-			$this->objPHPExcel->getActiveSheet()->setCellValue('M' . $counter, $this->data['orders'][0]['shipping_firstname']);
-			$this->objPHPExcel->getActiveSheet()->setCellValue('N' . $counter, $this->data['orders'][0]['shipping_lastname']);
-			$this->objPHPExcel->getActiveSheet()->setCellValue('O' . $counter, $this->data['orders'][0]['shipping_address_1'] . ' ' . 	$this->data['orders'][0]['shipping_address_2']);
-			$this->objPHPExcel->getActiveSheet()->setCellValue('P' . $counter, $this->data['orders'][0]['shipping_city']);
-			$this->objPHPExcel->getActiveSheet()->setCellValue('Q' . $counter, $this->data['orders'][0]['shipping_postcode']);
-			$this->objPHPExcel->getActiveSheet()->setCellValue('R' . $counter, $this->data['orders'][0]['shipping_zone']);
-			$this->objPHPExcel->getActiveSheet()->setCellValue('S' . $counter, $this->data['orders'][0]['shipping_country']);
-			$this->objPHPExcel->getActiveSheet()->setCellValue('T' . $counter, $this->data['orders'][0]['shipping_method']);
+			$this->objPHPExcel->getActiveSheet()->setCellValue('C' . $counter, $this->data['orders'][0]['invoice_no']);
+			$this->objPHPExcel->getActiveSheet()->setCellValue('D' . $counter, $this->data['orders'][0]['customer']);
+			$this->objPHPExcel->getActiveSheet()->setCellValue('E' . $counter, $this->data['orders'][0]['email']);
+			$this->objPHPExcel->getActiveSheet()->setCellValue('F' . $counter, $this->data['orders'][0]['telephone']);
+			$this->objPHPExcel->getActiveSheet()->setCellValue('G' . $counter, $this->data['orders'][0]['vat']['text']);
+			$this->objPHPExcel->getActiveSheet()->setCellValue('H' . $counter, $this->data['orders'][0]['total']);
+			$this->objPHPExcel->getActiveSheet()->setCellValue('I' . $counter, $this->data['orders'][0]['date_added']);
+			$this->objPHPExcel->getActiveSheet()->setCellValue('J' . $counter, $prod['quantity']);
+			$this->objPHPExcel->getActiveSheet()->setCellValue('K' . $counter, html_entity_decode($prod['name'], ENT_QUOTES, 'UTF-8'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('L' . $counter, html_entity_decode($prod['model'], ENT_QUOTES, 'UTF-8'));
+			$this->objPHPExcel->getActiveSheet()->setCellValue('N' . $counter, $color);
+			$this->objPHPExcel->getActiveSheet()->setCellValue('N' . $counter, $size);
+			$this->objPHPExcel->getActiveSheet()->setCellValue('O' . $counter, $this->data['orders'][0]['shipping_firstname']);
+			$this->objPHPExcel->getActiveSheet()->setCellValue('P' . $counter, $this->data['orders'][0]['shipping_lastname']);
+			$this->objPHPExcel->getActiveSheet()->setCellValue('Q' . $counter, $this->data['orders'][0]['shipping_address_1'] . ' ' . 	$this->data['orders'][0]['shipping_address_2']);
+			$this->objPHPExcel->getActiveSheet()->setCellValue('R' . $counter, $this->data['orders'][0]['shipping_city']);
+			$this->objPHPExcel->getActiveSheet()->setCellValue('S' . $counter, $this->data['orders'][0]['shipping_postcode']);
+			$this->objPHPExcel->getActiveSheet()->setCellValue('T' . $counter, $this->data['orders'][0]['shipping_zone']);
+			$this->objPHPExcel->getActiveSheet()->setCellValue('U' . $counter, $this->data['orders'][0]['shipping_country']);
+			$this->objPHPExcel->getActiveSheet()->setCellValue('V' . $counter, $this->data['orders'][0]['shipping_method']);
 
 			$counter++;
 			$this->mainCounter++;
@@ -698,11 +733,11 @@ class ControllerReportExportXLS extends Controller
 		);
 
 		// Set the style of heading cells
-		$this->objPHPExcel->getActiveSheet()->getStyle('A1:T1')->applyFromArray($styleThinBlackBorderOutline);
-		$this->objPHPExcel->getActiveSheet()->getStyle('A1:T1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-		$this->objPHPExcel->getActiveSheet()->getStyle('A1:T1')->getFill()->getStartColor()->setARGB('FF808080');
+		$this->objPHPExcel->getActiveSheet()->getStyle('A1:V1')->applyFromArray($styleThinBlackBorderOutline);
+		$this->objPHPExcel->getActiveSheet()->getStyle('A1:V1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+		$this->objPHPExcel->getActiveSheet()->getStyle('A1:V1')->getFill()->getStartColor()->setARGB('FF808080');
 
-		$columns = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T');
+		$columns = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V');
 		foreach ($columns as $col)
 		{
 			$this->objPHPExcel->getActiveSheet()->getColumnDimension($col)->setAutoSize(true);

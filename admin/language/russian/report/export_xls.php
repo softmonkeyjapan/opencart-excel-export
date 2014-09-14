@@ -4,6 +4,8 @@
 	// Module text
 	$_['text_home'] 					= 'Главная';
 	$_['text_customer'] 				= 'Имя клиента';
+	$_['text_invoice_no']               = 'счет-фактура номер';
+	$_['text_generate']                 = 'Генерация';
 	$_['text_date']						= 'Дата покупки';
 	$_['text_order']					= 'ID заказа';
 	$_['text_amount']					= 'Общая сумма';
@@ -26,6 +28,7 @@
 	$_['header_tracking'] 				= 'Номер отслеживания';
 	$_['header_order_id'] 				= 'ID заказа';
 	$_['header_store_name'] 			= 'Магазин';
+	$_['header_invoice_no']             = 'счет-фактура номер';
 	$_['header_customer'] 				= 'Имя клиента';
 	$_['header_email'] 					= 'E-mail';
 	$_['header_telephone'] 				= 'Телефон';
