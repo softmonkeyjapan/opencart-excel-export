@@ -103,14 +103,26 @@ class ModelReportExportXLS extends Model
 	}
 
 	/**
-	* Get product list
-	*
-	* @param  integer  $order_id
-	* @return rows
-	*/
+	 * Get product list
+	 *
+	 * @param  integer  $order_id
+	 * @return rows
+	 */
 	public function getProductListFromOrder($order_id)
 	{
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE order_id=" . (int)$order_id);
+		return $query->rows;
+	}
+
+	/**
+	 * Get customer address
+	 *
+	 * @param  integer  $customer_id
+	 * @return result
+	 */
+	public function getCustomerAddress($customer_id)
+	{
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address` WHERE customer_id=" . (int)$customer_id);
 		return $query->rows;
 	}
 }

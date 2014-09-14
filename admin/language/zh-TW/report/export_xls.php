@@ -41,6 +41,7 @@ $_['header_order_id'] 				= '訂單編號';
 $_['header_store_name'] 			= '商店名稱';
 $_['header_invoice_no']             = '發票號';
 $_['header_customer'] 				= '客戶';
+$_['header_customer_company']       = '客戶公司';
 $_['header_email']					= '電子郵件';
 $_['header_telephone'] 				= '電話';
 $_['header_total']					= '總價：';

@@ -30,6 +30,7 @@
 	$_['header_store_name'] 			= 'Магазин';
 	$_['header_invoice_no']             = 'счет-фактура номер';
 	$_['header_customer'] 				= 'Имя клиента';
+	$_['header_customer_company']       = 'Компания Клиентам';
 	$_['header_email'] 					= 'E-mail';
 	$_['header_telephone'] 				= 'Телефон';
 	$_['header_total'] 					= 'Итого (цена):';
