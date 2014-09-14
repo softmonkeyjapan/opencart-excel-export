@@ -96,7 +96,7 @@ class ControllerReportExportXLS extends Controller
 		$this->data['heading_title']    = $this->language->get('heading_title');
 		$this->data['text_customer']    = $this->language->get('text_customer');
 		$this->data['text_invoice_no']  = $this->language->get('text_invoice_no');
-		$this->data['text_generate']  = $this->language->get('text_generate');
+		$this->data['text_generate']    = $this->language->get('text_generate');
 		$this->data['text_date']        = $this->language->get('text_date');
 		$this->data['text_order']       = $this->language->get('text_order');
 		$this->data['text_amount']      = $this->language->get('text_amount');
@@ -594,13 +594,18 @@ class ControllerReportExportXLS extends Controller
 
 			// Customer company
 			$address = $this->model_report_export_xls->getCustomerAddress($res['customer_id']);
+			$company = '';
+			if (sizeof($address) > 0)
+			{
+				$company = $address[0]['company'];
+			}
 
 			$this->data['orders'][] = array(
 				'order_id'           => $res['order_id'],
 				'store_name'         => $res['store_name'],
 				'invoice_no'         => $invoice,
 				'customer'           => $res['firstname'] . ' ' . $res['lastname'],
-				'customer_company'   => $address[0]['company'],
+				'customer_company'   => $company,
 				'email'              => $res['email'],
 				'telephone'          => $res['telephone'],
 				'vat'                => $vat,
