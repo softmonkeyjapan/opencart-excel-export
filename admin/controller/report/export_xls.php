@@ -569,7 +569,10 @@ class ControllerReportExportXLS extends Controller
 
 		$result = $this->model_report_export_xls->getOrder($order_id);
 		$totals = $this->model_sale_order->getOrderTotals($order_id);
-		$vat = '';
+		$vat = array(
+			'title' => '',
+			'text'  => ''
+		);
 
 		// Build array
 		foreach ($result as $res)
