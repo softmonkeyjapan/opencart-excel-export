@@ -30,6 +30,7 @@
 	$_['header_store_name'] 			= 'Store name';
 	$_['header_invoice_no']             = 'Invoice No.';
 	$_['header_customer'] 				= 'Customer';
+	$_['header_customer_company']       = 'Customer\'s company';
 	$_['header_email'] 					= 'E-mail';
 	$_['header_telephone'] 				= 'Telephone';
 	$_['header_total'] 					= 'Total (price):';
