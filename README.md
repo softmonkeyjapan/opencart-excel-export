@@ -40,6 +40,16 @@ In `Access Permission` and `Modify Permission`, check the item `report/export_xl
 For more details on how to use it, go to http://kartono-loic.com/app/webroot/excel-export/documentation/
 
 
+## Features
+
+The plugin can actually do the following things :  
+- Export an order as invoice including the Store logo if any
+- Export an order as list including the following informations :
+    - Order ID, Invoice Number, Store Name, Customer, Customer Company, Customer Email, Customer Telephone, Total (Price), VAT, Date of Purchase, Quantity, Product Name, Color, Size, Firstname, Lastname, Address, City, Postal Code, Region/State, Country, Shipping Method
+- Export all orders as list in one file
+- i18n support for the following locales : English, French, Russian, Chinese (zh-TW)
+
+
 ## Thanks
 
 It's important to thanks poeple that helped me improve this extension : 
@@ -49,4 +59,4 @@ It's important to thanks poeple that helped me improve this extension :
 
 ## License
 
-You are allowed to use it for whatever you want and whenever you want.
+License under MIT
