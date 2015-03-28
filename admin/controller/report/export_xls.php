@@ -111,11 +111,9 @@ class ControllerReportExportXLS extends Controller
 		$this->data['button_export']    = $this->url->link('report/export_xls/export', 'token=' . $this->session->data['token'] . $url . '&order=all', 'SSL');
 		$this->data['button_filter']    = $this->language->get('button_filter');
 
-
 		// Order status
 		$this->load->model('localisation/order_status');
 		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-
 
 		// Model export
 		$this->load->model('sale/order');
@@ -170,10 +168,9 @@ class ControllerReportExportXLS extends Controller
 
 		// Preparing response
 		$this->data['token'] = $this->session->data['token'];
-		$this->data['filter_date_start'] = $this->filter_date_start;
-		$this->data['filter_date_end'] = $this->filter_date_end;
+		$this->data['filter_date_start'] = date($this->language->get('date_format_short'), strtotime($this->filter_date_start));
+		$this->data['filter_date_end'] = date($this->language->get('date_format_short'), strtotime($this->filter_date_end));
 		$this->data['filter_order_status_id'] = $this->filter_order_status_id;
-
 
 		// Preparing view
 		$this->template = 'report/export_xls.tpl';
@@ -540,7 +537,6 @@ class ControllerReportExportXLS extends Controller
 		// Set the orientation page an give a name to the worksheet
 		$this->objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
 		$this->objPHPExcel->getActiveSheet()->setTitle('Invoice #' . $order_id);
-
 
 		// Set the column in autosize
 		$columns = array('A', 'G', 'H');
